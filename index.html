@@ -2,77 +2,42 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Visor PDF PRO</title>
+<title>Visor PDF</title>
 
 <style>
 body{
     margin:0;
-    background:black;
+    background:#000;
 }
 
-/* CONTENEDOR SCROLL */
-.viewer{
-    position:relative;
-    width:100%;
-    height:100vh;
-    overflow:auto;
-}
-
-/* PDF */
+/* PDF normal */
 iframe{
     width:100%;
-    height:34000px; /* AJUSTA SEGÚN TU PDF */
+    height:100vh;
     border:none;
-}
-
-/* CAPA INTELIGENTE */
-.blocker{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:4000px;
-    z-index:10;
 }
 </style>
 </head>
 
 <body>
 
-<div class="viewer" id="viewer">
-
-    <iframe src="manual-electricidad.pdf#toolbar=0&navpanes=0"></iframe>
-
-    <div class="blocker" id="blocker"></div>
-
-</div>
+<iframe src="manual-electricidad.pdf#toolbar=0&navpanes=0"></iframe>
 
 <script>
-const viewer = document.getElementById("viewer");
-const blocker = document.getElementById("blocker");
-
-// 🚫 BLOQUEAR CLIC
-blocker.addEventListener("mousedown", e=>e.preventDefault());
-blocker.addEventListener("contextmenu", e=>e.preventDefault());
-
-// ✅ PERMITIR SCROLL CON RUEDA
-blocker.addEventListener("wheel", function(e){
-    viewer.scrollTop += e.deltaY;
+// 🚫 SOLO OCULTAR CLICK DERECHO (fuera del visor puede funcionar)
+document.addEventListener("contextmenu", function(e){
+    e.preventDefault();
 });
 
-// ✅ PERMITIR SCROLL CON TECLAS
+// 🚫 SOLO BLOQUEAR CTRL + S y CTRL + P
 document.addEventListener("keydown", function(e){
-    if(e.key === "ArrowDown") viewer.scrollTop += 50;
-    if(e.key === "ArrowUp") viewer.scrollTop -= 50;
-
-    if(e.ctrlKey && (e.key==='s'||e.key==='p'||e.key==='u')){
+    if(e.ctrlKey && (e.key === 's' || e.key === 'p')){
         e.preventDefault();
     }
 });
 
-// 🚫 BLOQUEAR IMPRESIÓN
+// 🚫 OCULTAR INTENTO DE IMPRESIÓN
 window.onbeforeprint = function(){
-    alert("Acción no permitida");
     return false;
 };
 </script>
