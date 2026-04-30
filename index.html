@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Electricidad App PRO</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- NAV -->
+<div class="nav">
+    <div onclick="cambiar('contenido')">📚 Contenido</div>
+    <div onclick="cambiar('juegos')">🎮 Juegos</div>
+    <div onclick="abrirPDF()">📖 PDF</div>
+</div>
+
+<!-- CONTENIDO -->
+<div id="contenido" class="pantalla">
+    <h1>⚡ Fundamentos</h1>
+
+    <div class="card">Electricidad = energía de electrones</div>
+    <div class="card">Voltaje = fuerza (V)</div>
+    <div class="card">Corriente = flujo (A)</div>
+    <div class="card">Resistencia = oposición (Ω)</div>
+</div>
+
+<!-- JUEGOS -->
+<div id="juegos" class="pantalla" style="display:none;">
+
+<h2>🎮 Juegos</h2>
+
+<!-- QUIZ -->
+<div class="card">
+<h3>Quiz rápido</h3>
+
+<div class="opcion" onclick="seleccionar(this,'correcto')">Voltaje = V</div>
+<div class="opcion" onclick="seleccionar(this,'error')">Voltaje = A</div>
+<div class="opcion" onclick="seleccionar(this,'error')">Voltaje = Ω</div>
+
+</div>
+
+<!-- MEMORIA -->
+<div class="card">
+<h3>Memoria</h3>
+<div class="memoria" id="memoria"></div>
+</div>
+
+<!-- SOPA -->
+<div class="card">
+<h3>Sopa de letras</h3>
+<div id="sopa" class="grid"></div>
+</div>
+
+</div>
+
+<!-- PDF -->
+<div id="pdfContainer">
+<div class="toolbar">
+<button onclick="cerrarPDF()">Cerrar</button>
+</div>
+<iframe src="manual-electricidad.pdf#toolbar=0"></iframe>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
