@@ -2,69 +2,49 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Manual Electricidad PRO</title>
+<title>Electricidad PRO App</title>
 
 <style>
 body{
     margin:0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family:'Segoe UI';
     background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
     color:white;
     text-align:center;
-    overflow-x:hidden;
 }
 
-/* Animación flotante */
-@keyframes float {
-    0%{transform:translateY(0px);}
-    50%{transform:translateY(-10px);}
-    100%{transform:translateY(0px);}
-}
-
-header{
-    padding:40px;
-}
-
-h1{
-    font-size:42px;
-}
-
-/* Contenido */
-.contenido{
-    max-width:1000px;
-    margin:auto;
+/* BOTONES */
+.menu{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
     padding:20px;
 }
 
-/* Cards flotantes */
-.card{
-    background: rgba(255,255,255,0.1);
-    padding:20px;
-    border-radius:20px;
-    margin:15px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    animation: float 4s ease-in-out infinite;
-}
-
-/* Botón */
-button{
-    padding:15px 35px;
-    border:none;
+.btn{
+    padding:15px 20px;
     border-radius:12px;
-    background: linear-gradient(45deg,#00ffcc,#00ccff);
+    background:#00ffcc;
     color:black;
-    font-weight:bold;
     cursor:pointer;
-    font-size:16px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    font-weight:bold;
 }
 
-button:hover{
-    transform:scale(1.05);
+/* CONTENEDORES */
+.section{
+    display:none;
+    padding:20px;
 }
 
-/* VISOR PDF */
+.card{
+    background:rgba(255,255,255,0.1);
+    padding:15px;
+    margin:10px;
+    border-radius:15px;
+}
+
+/* PDF */
 #pdfContainer{
     position:fixed;
     top:0;
@@ -77,141 +57,186 @@ button:hover{
     z-index:999;
 }
 
-/* Barra */
 .toolbar{
     background:#111;
     padding:10px;
-    display:flex;
-    justify-content:center;
-    gap:10px;
 }
 
-.toolbar button{
-    background:#00ffcc;
-    color:black;
-}
-
-/* iframe */
 iframe{
     width:100%;
     height:100%;
+}
+
+/* input */
+input{
+    padding:10px;
+    border-radius:10px;
     border:none;
 }
 
-/* Bloqueos */
-body{
-    user-select:none;
+/* sopa */
+.grid{
+    display:grid;
+    grid-template-columns: repeat(6,40px);
+    justify-content:center;
+    gap:5px;
+}
+
+.cell{
+    width:40px;
+    height:40px;
+    background:white;
+    color:black;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>⚡ Manual de Electricidad PRO</h1>
-<p>Aprende electricidad de forma moderna y visual</p>
-</header>
+<h1>⚡ Electricidad PRO</h1>
 
-<div class="contenido">
+<div class="menu">
+<div class="btn" onclick="abrir(1)">Fundamentos</div>
+<div class="btn" onclick="abrir(2)">Leyes</div>
+<div class="btn" onclick="abrir(3)">Circuitos</div>
+<div class="btn" onclick="abrir(4)">Domiciliario</div>
+<div class="btn" onclick="abrir(5)">Solar</div>
+<div class="btn" onclick="abrir(6)">Final</div>
+</div>
 
+<!-- SECCIONES -->
+
+<div id="sec1" class="section">
 <div class="card">
-<h2>🔌 ¿Qué es la electricidad?</h2>
-<p>Energía generada por el movimiento de electrones en un conductor.</p>
+<h2>¿Qué es la electricidad?</h2>
+<input id="q1" placeholder="Respuesta">
+</div>
+<button onclick="verificar(1)">Verificar</button>
 </div>
 
+<div id="sec2" class="section">
 <div class="card">
-<h2>⚡ Voltaje</h2>
-<p>Es la fuerza que impulsa los electrones. Se mide en voltios (V).</p>
+<h2>Ley de Ohm V = ?</h2>
+<input id="q2">
+</div>
+<button onclick="verificar(2)">Verificar</button>
 </div>
 
+<div id="sec3" class="section">
 <div class="card">
-<h2>🔋 Corriente</h2>
-<p>Flujo de electrones. Se mide en amperios (A).</p>
+<h2>Corriente se mide en?</h2>
+<input id="q3">
+</div>
+<button onclick="verificar(3)">Verificar</button>
 </div>
 
+<div id="sec4" class="section">
 <div class="card">
-<h2>💡 Resistencia</h2>
-<p>Oposición al paso de corriente. Se mide en ohmios (Ω).</p>
+<h2>Voltaje se mide en?</h2>
+<input id="q4">
+</div>
+<button onclick="verificar(4)">Verificar</button>
 </div>
 
+<div id="sec5" class="section">
 <div class="card">
-<h2>⚙️ Potencia</h2>
-<p>P = V × I. Energía consumida por un dispositivo.</p>
+<h2>Panel solar convierte energía?</h2>
+<input id="q5">
+</div>
+<button onclick="verificar(5)">Verificar</button>
 </div>
 
-<div class="card">
-<h2>🔄 Tipos de corriente</h2>
-<p>AC (alterna) y DC (continua).</p>
+<div id="sec6" class="section">
+<h2>Sopa de letras</h2>
+<div class="grid" id="sopa"></div>
+<button onclick="final()">Finalizar</button>
 </div>
 
-<div class="card">
-<h2>🔗 Circuito eléctrico</h2>
-<p>Camino cerrado por donde fluye la electricidad.</p>
-</div>
-
-<div class="card">
-<h2>⚠️ Seguridad eléctrica</h2>
-<p>No manipular cables mojados, usar protección y desconectar antes de trabajar.</p>
-</div>
-
-<br>
-
-<button onclick="abrirPDF()">📖 Ver Manual Completo</button>
-
-</div>
-
-<!-- VISOR PDF -->
+<!-- PDF -->
 <div id="pdfContainer">
-
 <div class="toolbar">
-    <button onclick="zoomIn()">➕</button>
-    <button onclick="zoomOut()">➖</button>
-    <button onclick="pantallaCompleta()">⛶</button>
-    <button onclick="cerrarPDF()">❌</button>
+<button onclick="cerrarPDF()">Cerrar</button>
+<button onclick="fullscreen()">Pantalla completa</button>
+</div>
+<iframe src="manual-electricidad.pdf#toolbar=0"></iframe>
 </div>
 
-<iframe id="visorPDF" src="manual-electricidad.pdf"></iframe>
-
-</div>
+<button onclick="abrirPDF()">📖 Ver PDF</button>
 
 <script>
-let zoom = 1;
 
+/* ABRIR SECCIONES */
+function abrir(n){
+    document.querySelectorAll('.section').forEach(s=>s.style.display='none');
+    document.getElementById("sec"+n).style.display="block";
+}
+
+/* RESPUESTAS */
+let respuestas = {
+1:"energia",
+2:"i*r",
+3:"amperios",
+4:"voltios",
+5:"solar"
+};
+
+/* VERIFICAR */
+function verificar(n){
+    let val = document.getElementById("q"+n).value.toLowerCase();
+    if(val.includes(respuestas[n])){
+        alert("Correcto");
+        localStorage.setItem("sec"+n,"ok");
+    }else{
+        alert("Incorrecto");
+    }
+}
+
+/* FINAL */
+function final(){
+    let ok=0;
+    for(let i=1;i<=5;i++){
+        if(localStorage.getItem("sec"+i)=="ok") ok++;
+    }
+
+    if(ok==5){
+        alert("🔥 Todo correcto");
+    }else{
+        alert("Te faltan respuestas");
+    }
+}
+
+/* SOPA SIMPLE */
+let letras="ELECTR";
+let sopa=document.getElementById("sopa");
+for(let i=0;i<36;i++){
+    let d=document.createElement("div");
+    d.className="cell";
+    d.innerText=letras[Math.floor(Math.random()*letras.length)];
+    sopa.appendChild(d);
+}
+
+/* PDF */
 function abrirPDF(){
     document.getElementById("pdfContainer").style.display="flex";
 }
-
 function cerrarPDF(){
     document.getElementById("pdfContainer").style.display="none";
 }
-
-/* Zoom */
-function zoomIn(){
-    zoom += 0.1;
-    document.getElementById("visorPDF").style.transform = "scale("+zoom+")";
+function fullscreen(){
+    document.getElementById("pdfContainer").requestFullscreen();
 }
 
-function zoomOut(){
-    zoom -= 0.1;
-    document.getElementById("visorPDF").style.transform = "scale("+zoom+")";
-}
-
-/* Pantalla completa */
-function pantallaCompleta(){
-    let elem = document.getElementById("pdfContainer");
-    if(elem.requestFullscreen){
-        elem.requestFullscreen();
-    }
-}
-
-/* Bloqueos */
-document.addEventListener("contextmenu", e => e.preventDefault());
-
+/* BLOQUEOS */
+document.addEventListener("contextmenu", e=>e.preventDefault());
 document.addEventListener("keydown", function(e){
-    if(e.ctrlKey && (e.key === 's' || e.key === 'p' || e.key === 'u')){
-        e.preventDefault();
-    }
+if(e.ctrlKey && (e.key==='s'||e.key==='p'||e.key==='u')){
+e.preventDefault();
+}
 });
+
 </script>
 
 </body>
