@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Mi Página - Electricidad</title>
+<title>Visor PDF</title>
 
-<!-- 🔥 GOOGLE ANALYTICS -->
+<!-- GOOGLE ANALYTICS -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TF2FTNT5JW"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -16,56 +16,27 @@ gtag('config', 'G-TF2FTNT5JW');
 <style>
 body{
     margin:0;
-    font-family:Arial;
-    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    color:white;
-    text-align:center;
+    background:#000;
 }
 
-header{
-    padding:40px;
-}
-
-.card{
-    background:rgba(255,255,255,0.1);
-    margin:20px;
-    padding:20px;
-    border-radius:15px;
-}
-
+/* PDF pantalla completa */
 iframe{
-    width:90%;
-    height:500px;
+    width:100%;
+    height:100vh;
     border:none;
-    border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>⚡ Manual de Electricidad</h1>
-<p>Bienvenido a mi página</p>
-</header>
-
-<div class="card">
-<h2>🔌 ¿Qué es la electricidad?</h2>
-<p>
-La electricidad es una forma de energía producida por el movimiento de electrones.
-</p>
-</div>
-
-<div class="card">
-<h2>📖 Ver Manual</h2>
-<iframe src="manual-electricidad.pdf#toolbar=0"></iframe>
-</div>
+<iframe src="manual-electricidad.pdf#toolbar=0&navpanes=0"></iframe>
 
 <script>
-// bloquear clic derecho (opcional)
+// bloquear clic derecho
 document.addEventListener("contextmenu", e=>e.preventDefault());
 
-// bloquear guardar/imprimir (opcional)
+// bloquear Ctrl+S y Ctrl+P
 document.addEventListener("keydown", function(e){
     if(e.ctrlKey && (e.key==='s'||e.key==='p')){
         e.preventDefault();
