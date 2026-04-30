@@ -2,21 +2,22 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Visor PDF</title>
+<title>Visor PDF PRO</title>
 
 <style>
 body{
     margin:0;
     background:#000;
+    font-family: Arial, sans-serif;
 }
 
-/* contenedor */
+/* CONTENEDOR */
 .viewer{
     width:100%;
     height:100vh;
 }
 
-/* pdf */
+/* PDF */
 iframe{
     width:100%;
     height:100%;
@@ -28,23 +29,26 @@ iframe{
 <body>
 
 <div class="viewer">
+    <!-- PDF SIN BARRA -->
     <iframe src="manual-electricidad.pdf#toolbar=0&navpanes=0&scrollbar=1"></iframe>
 </div>
 
 <script>
-// bloquear clic derecho
-document.addEventListener("contextmenu", e=>e.preventDefault());
+// 🔒 BLOQUEAR CLIC DERECHO
+document.addEventListener("contextmenu", function(e){
+    e.preventDefault();
+});
 
-// bloquear teclas típicas
+// 🔒 BLOQUEAR TECLAS (guardar, imprimir, inspeccionar)
 document.addEventListener("keydown", function(e){
     if(e.ctrlKey && (e.key === 's' || e.key === 'p' || e.key === 'u')){
         e.preventDefault();
     }
 });
 
-// intento bloquear impresión
+// 🔒 BLOQUEAR INTENTO DE IMPRESIÓN
 window.onbeforeprint = function(){
-    alert("Impresión deshabilitada");
+    alert("Acción no permitida");
     return false;
 };
 </script>
