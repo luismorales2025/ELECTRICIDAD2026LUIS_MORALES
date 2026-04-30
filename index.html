@@ -2,15 +2,23 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Manual de Electricidad PRO</title>
+<title>Manual Electricidad PRO</title>
 
 <style>
 body{
     margin:0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
     color:white;
     text-align:center;
+    overflow-x:hidden;
+}
+
+/* Animación flotante */
+@keyframes float {
+    0%{transform:translateY(0px);}
+    50%{transform:translateY(-10px);}
+    100%{transform:translateY(0px);}
 }
 
 header{
@@ -18,57 +26,81 @@ header{
 }
 
 h1{
-    font-size:40px;
+    font-size:42px;
 }
 
+/* Contenido */
 .contenido{
-    max-width:900px;
+    max-width:1000px;
     margin:auto;
     padding:20px;
 }
 
+/* Cards flotantes */
 .card{
     background: rgba(255,255,255,0.1);
     padding:20px;
-    border-radius:15px;
-    margin-bottom:20px;
+    border-radius:20px;
+    margin:15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: float 4s ease-in-out infinite;
 }
 
+/* Botón */
 button{
-    padding:15px 30px;
+    padding:15px 35px;
     border:none;
-    border-radius:10px;
-    background:#00ffcc;
+    border-radius:12px;
+    background: linear-gradient(45deg,#00ffcc,#00ccff);
     color:black;
     font-weight:bold;
     cursor:pointer;
+    font-size:16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
 
 button:hover{
-    background:#00ccaa;
+    transform:scale(1.05);
 }
 
-/* PDF oculto */
-#pdfViewer{
+/* VISOR PDF */
+#pdfContainer{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:black;
     display:none;
-    margin-top:20px;
+    flex-direction:column;
+    z-index:999;
 }
 
+/* Barra */
+.toolbar{
+    background:#111;
+    padding:10px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+}
+
+.toolbar button{
+    background:#00ffcc;
+    color:black;
+}
+
+/* iframe */
 iframe{
-    width:90%;
-    height:600px;
+    width:100%;
+    height:100%;
     border:none;
-    border-radius:15px;
 }
 
-/* Bloquear selección */
-body {
-    user-select: none;
-}
-
-/* Ocultar barra de PDF en algunos navegadores */
-iframe::-webkit-scrollbar {
-    display: none;
+/* Bloqueos */
+body{
+    user-select:none;
 }
 </style>
 </head>
@@ -76,67 +108,110 @@ iframe::-webkit-scrollbar {
 <body>
 
 <header>
-<h1>⚡ Manual de Electricidad</h1>
-<p>Aprende conceptos básicos y avanzados de electricidad</p>
+<h1>⚡ Manual de Electricidad PRO</h1>
+<p>Aprende electricidad de forma moderna y visual</p>
 </header>
 
 <div class="contenido">
 
 <div class="card">
 <h2>🔌 ¿Qué es la electricidad?</h2>
-<p>
-La electricidad es una forma de energía que se produce por el movimiento de electrones.
-Se utiliza en hogares, industrias y dispositivos electrónicos.
-</p>
+<p>Energía generada por el movimiento de electrones en un conductor.</p>
 </div>
 
 <div class="card">
-<h2>⚡ Tipos de corriente</h2>
-<p>
-Corriente continua (DC) y corriente alterna (AC).  
-La corriente alterna es la más usada en casas.
-</p>
+<h2>⚡ Voltaje</h2>
+<p>Es la fuerza que impulsa los electrones. Se mide en voltios (V).</p>
 </div>
 
 <div class="card">
-<h2>💡 Ley de Ohm</h2>
-<p>
-V = I × R  
-Donde V es voltaje, I corriente y R resistencia.
-</p>
+<h2>🔋 Corriente</h2>
+<p>Flujo de electrones. Se mide en amperios (A).</p>
 </div>
 
-<button onclick="mostrarPDF()">📖 Ver Manual Completo</button>
-
-<div id="pdfViewer">
-    <iframe src="manual-electricidad.pdf#toolbar=0"></iframe>
+<div class="card">
+<h2>💡 Resistencia</h2>
+<p>Oposición al paso de corriente. Se mide en ohmios (Ω).</p>
 </div>
+
+<div class="card">
+<h2>⚙️ Potencia</h2>
+<p>P = V × I. Energía consumida por un dispositivo.</p>
+</div>
+
+<div class="card">
+<h2>🔄 Tipos de corriente</h2>
+<p>AC (alterna) y DC (continua).</p>
+</div>
+
+<div class="card">
+<h2>🔗 Circuito eléctrico</h2>
+<p>Camino cerrado por donde fluye la electricidad.</p>
+</div>
+
+<div class="card">
+<h2>⚠️ Seguridad eléctrica</h2>
+<p>No manipular cables mojados, usar protección y desconectar antes de trabajar.</p>
+</div>
+
+<br>
+
+<button onclick="abrirPDF()">📖 Ver Manual Completo</button>
+
+</div>
+
+<!-- VISOR PDF -->
+<div id="pdfContainer">
+
+<div class="toolbar">
+    <button onclick="zoomIn()">➕</button>
+    <button onclick="zoomOut()">➖</button>
+    <button onclick="pantallaCompleta()">⛶</button>
+    <button onclick="cerrarPDF()">❌</button>
+</div>
+
+<iframe id="visorPDF" src="manual-electricidad.pdf"></iframe>
 
 </div>
 
 <script>
-// Mostrar PDF
-function mostrarPDF(){
-    document.getElementById("pdfViewer").style.display = "block";
+let zoom = 1;
+
+function abrirPDF(){
+    document.getElementById("pdfContainer").style.display="flex";
 }
 
-// Bloquear clic derecho
-document.addEventListener("contextmenu", function(e){
-    e.preventDefault();
-});
+function cerrarPDF(){
+    document.getElementById("pdfContainer").style.display="none";
+}
 
-// Bloquear teclas comunes de descarga/inspección
+/* Zoom */
+function zoomIn(){
+    zoom += 0.1;
+    document.getElementById("visorPDF").style.transform = "scale("+zoom+")";
+}
+
+function zoomOut(){
+    zoom -= 0.1;
+    document.getElementById("visorPDF").style.transform = "scale("+zoom+")";
+}
+
+/* Pantalla completa */
+function pantallaCompleta(){
+    let elem = document.getElementById("pdfContainer");
+    if(elem.requestFullscreen){
+        elem.requestFullscreen();
+    }
+}
+
+/* Bloqueos */
+document.addEventListener("contextmenu", e => e.preventDefault());
+
 document.addEventListener("keydown", function(e){
     if(e.ctrlKey && (e.key === 's' || e.key === 'p' || e.key === 'u')){
         e.preventDefault();
     }
 });
-
-// Intento de bloquear impresión
-window.onbeforeprint = function () {
-    alert("Impresión deshabilitada");
-    return false;
-};
 </script>
 
 </body>
