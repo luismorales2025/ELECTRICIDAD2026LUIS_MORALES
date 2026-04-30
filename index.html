@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Manual de Electricidad PRO</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    text-align:center;
+}
+
+header{
+    padding:40px;
+}
+
+h1{
+    font-size:40px;
+}
+
+.contenido{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background: rgba(255,255,255,0.1);
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+
+button{
+    padding:15px 30px;
+    border:none;
+    border-radius:10px;
+    background:#00ffcc;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#00ccaa;
+}
+
+/* PDF oculto */
+#pdfViewer{
+    display:none;
+    margin-top:20px;
+}
+
+iframe{
+    width:90%;
+    height:600px;
+    border:none;
+    border-radius:15px;
+}
+
+/* Bloquear selección */
+body {
+    user-select: none;
+}
+
+/* Ocultar barra de PDF en algunos navegadores */
+iframe::-webkit-scrollbar {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>⚡ Manual de Electricidad</h1>
+<p>Aprende conceptos básicos y avanzados de electricidad</p>
+</header>
+
+<div class="contenido">
+
+<div class="card">
+<h2>🔌 ¿Qué es la electricidad?</h2>
+<p>
+La electricidad es una forma de energía que se produce por el movimiento de electrones.
+Se utiliza en hogares, industrias y dispositivos electrónicos.
+</p>
+</div>
+
+<div class="card">
+<h2>⚡ Tipos de corriente</h2>
+<p>
+Corriente continua (DC) y corriente alterna (AC).  
+La corriente alterna es la más usada en casas.
+</p>
+</div>
+
+<div class="card">
+<h2>💡 Ley de Ohm</h2>
+<p>
+V = I × R  
+Donde V es voltaje, I corriente y R resistencia.
+</p>
+</div>
+
+<button onclick="mostrarPDF()">📖 Ver Manual Completo</button>
+
+<div id="pdfViewer">
+    <iframe src="manual-electricidad.pdf#toolbar=0"></iframe>
+</div>
+
+</div>
+
+<script>
+// Mostrar PDF
+function mostrarPDF(){
+    document.getElementById("pdfViewer").style.display = "block";
+}
+
+// Bloquear clic derecho
+document.addEventListener("contextmenu", function(e){
+    e.preventDefault();
+});
+
+// Bloquear teclas comunes de descarga/inspección
+document.addEventListener("keydown", function(e){
+    if(e.ctrlKey && (e.key === 's' || e.key === 'p' || e.key === 'u')){
+        e.preventDefault();
+    }
+});
+
+// Intento de bloquear impresión
+window.onbeforeprint = function () {
+    alert("Impresión deshabilitada");
+    return false;
+};
+</script>
+
+</body>
+</html>
