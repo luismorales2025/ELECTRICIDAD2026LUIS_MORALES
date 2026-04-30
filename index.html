@@ -35,12 +35,18 @@ iframe{
 // bloquear clic derecho
 document.addEventListener("contextmenu", e=>e.preventDefault());
 
-// bloquear guardar / imprimir
+// bloquear teclas típicas
 document.addEventListener("keydown", function(e){
-    if(e.ctrlKey && (e.key==='s'||e.key==='p')){
+    if(e.ctrlKey && (e.key === 's' || e.key === 'p' || e.key === 'u')){
         e.preventDefault();
     }
 });
+
+// intento bloquear impresión
+window.onbeforeprint = function(){
+    alert("Impresión deshabilitada");
+    return false;
+};
 </script>
 
 </body>
