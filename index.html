@@ -4,13 +4,23 @@
 <meta charset="UTF-8">
 <title>Visor PDF</title>
 
-<!-- GOOGLE ANALYTICS -->
+<!-- 🔥 ANTI CACHE -->
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<!-- 🔥 GOOGLE ANALYTICS (PON TU ID REAL) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TF2FTNT5JW"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-TF2FTNT5JW');
+
+// 👇 esto ayuda a que no cachee eventos
+gtag('config', 'G-TF2FTNT5JW', {
+  'send_page_view': true,
+  'transport_type': 'beacon'
+});
 </script>
 
 <style>
@@ -30,18 +40,25 @@ iframe{
 
 <body>
 
-<iframe src="manual-electricidad.pdf#toolbar=0&navpanes=0"></iframe>
+<iframe id="pdf"></iframe>
 
 <script>
-// bloquear clic derecho
+// 🔥 CARGAR PDF SIN CACHE
+document.getElementById("pdf").src =
+"manual-electricidad.pdf?nocache=" + new Date().getTime();
+
+// 🚫 BLOQUEOS BÁSICOS
 document.addEventListener("contextmenu", e=>e.preventDefault());
 
-// bloquear Ctrl+S y Ctrl+P
 document.addEventListener("keydown", function(e){
     if(e.ctrlKey && (e.key==='s'||e.key==='p')){
         e.preventDefault();
     }
 });
+
+window.onbeforeprint = function(){
+    return false;
+};
 </script>
 
 </body>
