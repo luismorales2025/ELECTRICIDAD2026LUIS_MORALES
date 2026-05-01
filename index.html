@@ -2,31 +2,73 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Visor limpio</title>
+<title>Visor PDF Seguro</title>
+
+<!-- ANTI CACHE -->
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 
 <style>
 body{
     margin:0;
     background:#000;
+    overflow:hidden; /* evita scroll externo */
 }
 
-/* pantalla completa */
+/* PDF pantalla completa */
 iframe{
     width:100%;
     height:100vh;
     border:none;
+    pointer-events:auto;
 }
 </style>
 </head>
 
 <body>
 
-<iframe id="visor"></iframe>
+<iframe id="pdf"></iframe>
 
 <script>
-// 👇 FORZAR VISOR SIN BARRA
-document.getElementById("visor").src =
-"manual-electricidad.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH";
+// 🔥 CARGAR PDF (ocultando toolbar)
+document.getElementById("pdf").src =
+"manual-electricidad.pdf#toolbar=0&navpanes=0&scrollbar=1";
+
+// 🚫 BLOQUEAR CLICK DERECHO
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// 🚫 BLOQUEAR TECLAS PELIGROSAS
+document.addEventListener("keydown", function(e){
+
+    // bloquear ctrl + cosas
+    if (e.ctrlKey && (
+        e.key === 's' || // guardar
+        e.key === 'p' || // imprimir
+        e.key === 'u' || // ver codigo
+        e.key === 'c' || // copiar
+        e.key === 'x' || // cortar
+        e.key === 'a'    // seleccionar todo
+    )) {
+        e.preventDefault();
+    }
+
+    // bloquear F12 (devtools)
+    if (e.key === "F12") {
+        e.preventDefault();
+    }
+});
+
+// 🚫 BLOQUEAR ARRASTRAR
+document.addEventListener("dragstart", e => e.preventDefault());
+
+// 🚫 BLOQUEAR SELECCIÓN
+document.addEventListener("selectstart", e => e.preventDefault());
+
+// 🚫 INTENTO DE BLOQUEAR IMPRIMIR
+window.onbeforeprint = function(){
+    return false;
+};
 </script>
 
 </body>
