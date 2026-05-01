@@ -15,47 +15,80 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
-// 👇 esto ayuda a que no cachee eventos
-gtag('config', 'G-TF2FTNT5JW', {
-  'send_page_view': true,
-  'transport_type': 'beacon'
-});
+gtag('config', 'G-TF2FTNT5JWL');
 </script>
 
 <style>
 body{
     margin:0;
     background:#000;
+    overflow:hidden;
 }
 
-/* PDF pantalla completa */
-iframe{
+/* CONTENEDOR */
+.viewer{
+    position:relative;
     width:100%;
     height:100vh;
+    overflow:auto;
+}
+
+/* PDF */
+iframe{
+    width:100%;
+    height:100%;
     border:none;
+}
+
+/* CAPA PARA BLOQUEAR INTERACCIÓN */
+.blocker{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:10;
 }
 </style>
 </head>
 
 <body>
 
-<iframe id="pdf"></iframe>
+<div class="viewer" id="viewer">
+
+    <!-- 👇 PDF SIN TOOLBAR -->
+    <iframe id="pdf" src=""></iframe>
+
+    <!-- 👇 CAPA BLOQUEO -->
+    <div class="blocker" id="blocker"></div>
+
+</div>
 
 <script>
-// 🔥 CARGAR PDF SIN CACHE
+// 🔥 CARGAR PDF SIN CACHE + SIN BARRAS
 document.getElementById("pdf").src =
-"manual-electricidad.pdf?nocache=" + new Date().getTime();
+"manual-electricidad.pdf#toolbar=0&navpanes=0&scrollbar=1&nocache=" + new Date().getTime();
 
-// 🚫 BLOQUEOS BÁSICOS
-document.addEventListener("contextmenu", e=>e.preventDefault());
+const viewer = document.getElementById("viewer");
+const blocker = document.getElementById("blocker");
 
+// 🚫 BLOQUEAR CLICS (incluye clic derecho)
+blocker.addEventListener("mousedown", e=>e.preventDefault());
+blocker.addEventListener("contextmenu", e=>e.preventDefault());
+
+// ✅ PERMITIR SOLO SCROLL
+blocker.addEventListener("wheel", function(e){
+    viewer.scrollTop += e.deltaY;
+});
+
+// 🚫 BLOQUEAR TECLAS DE DESCARGA
 document.addEventListener("keydown", function(e){
-    if(e.ctrlKey && (e.key==='s'||e.key==='p')){
+    if(e.ctrlKey && (e.key==='s'||e.key==='p'||e.key==='u')){
         e.preventDefault();
     }
 });
 
+// 🚫 BLOQUEAR IMPRESIÓN
 window.onbeforeprint = function(){
     return false;
 };
