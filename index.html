@@ -2,96 +2,31 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Visor PDF</title>
-
-<!-- 🔥 ANTI CACHE -->
-<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-
-<!-- 🔥 GOOGLE ANALYTICS (PON TU ID REAL) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TF2FTNT5JW"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-TF2FTNT5JWL');
-</script>
+<title>Visor limpio</title>
 
 <style>
 body{
     margin:0;
     background:#000;
-    overflow:hidden;
 }
 
-/* CONTENEDOR */
-.viewer{
-    position:relative;
-    width:100%;
-    height:100vh;
-    overflow:auto;
-}
-
-/* PDF */
+/* pantalla completa */
 iframe{
     width:100%;
-    height:100%;
+    height:100vh;
     border:none;
-}
-
-/* CAPA PARA BLOQUEAR INTERACCIÓN */
-.blocker{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    z-index:10;
 }
 </style>
 </head>
 
 <body>
 
-<div class="viewer" id="viewer">
-
-    <!-- 👇 PDF SIN TOOLBAR -->
-    <iframe id="pdf" src=""></iframe>
-
-    <!-- 👇 CAPA BLOQUEO -->
-    <div class="blocker" id="blocker"></div>
-
-</div>
+<iframe id="visor"></iframe>
 
 <script>
-// 🔥 CARGAR PDF SIN CACHE + SIN BARRAS
-document.getElementById("pdf").src =
-"manual-electricidad.pdf#toolbar=0&navpanes=0&scrollbar=1&nocache=" + new Date().getTime();
-
-const viewer = document.getElementById("viewer");
-const blocker = document.getElementById("blocker");
-
-// 🚫 BLOQUEAR CLICS (incluye clic derecho)
-blocker.addEventListener("mousedown", e=>e.preventDefault());
-blocker.addEventListener("contextmenu", e=>e.preventDefault());
-
-// ✅ PERMITIR SOLO SCROLL
-blocker.addEventListener("wheel", function(e){
-    viewer.scrollTop += e.deltaY;
-});
-
-// 🚫 BLOQUEAR TECLAS DE DESCARGA
-document.addEventListener("keydown", function(e){
-    if(e.ctrlKey && (e.key==='s'||e.key==='p'||e.key==='u')){
-        e.preventDefault();
-    }
-});
-
-// 🚫 BLOQUEAR IMPRESIÓN
-window.onbeforeprint = function(){
-    return false;
-};
+// 👇 FORZAR VISOR SIN BARRA
+document.getElementById("visor").src =
+"manual-electricidad.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH";
 </script>
 
 </body>
